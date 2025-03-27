@@ -28,7 +28,15 @@ async function run() {
         const YMAITAIDB = client.db("YMAITAIDB");
         const pcDataCollection = YMAITAIDB.collection("pcDataTable");
 
-        // save pc data to the db
+        // GET: retrieve pc data from the db
+        app.get('/pcData', async (req, res) => {
+            const query = {};
+            const cursor = pcDataCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
+        // POST: save pc data to the db
         app.post('/pcData', async (req, res) => {
             const pcData = req.body;
             const result = await pcDataCollection.insertOne(pcData);
