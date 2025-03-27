@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 // middleware
@@ -41,6 +41,15 @@ async function run() {
             const pcData = req.body;
             const result = await pcDataCollection.insertOne(pcData);
             res.send(result);
+        })
+
+        // DELETE: delete pc data from db
+        app.delete('/pcData/:id', async (req, res) => {
+            const pcData = req.params.id;
+            const query = { _id: new ObjectId(pcData) };
+            const result = await pcDataCollection.deleteOne(query);
+            res.send(result);
+
         })
 
         // Send a ping to confirm a successful connection
