@@ -45,7 +45,7 @@ async function run() {
             res.send(result);
         })
 
-        // DELETE: delete pc data from db
+        // DELETE: delete pc data from the db
         app.delete('/pcInfo/:id', async (req, res) => {
             const pcData = req.params.id;
             const query = { _id: new ObjectId(pcData) };
@@ -67,6 +67,14 @@ async function run() {
         app.post('/monitorInfo', async (req, res) => {
             const monitorData = req.body;
             const result = await monitorDataCollection.insertOne(monitorData);
+            res.send(result);
+        })
+
+        // DELETE: delete monitor data from the db
+        app.delete('/pcInfo/:id', async (req, res) => {
+            const monitorData = req.params.id;
+            const query = { _id: new ObjectId(monitorData) };
+            const result = await monitorDataCollection.deleteOne(query);
             res.send(result);
         })
         /****** MONITOR INFO BACKEND CODE END *******/
