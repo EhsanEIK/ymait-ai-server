@@ -71,7 +71,7 @@ async function run() {
         })
 
         // DELETE: delete monitor data from the db
-        app.delete('/pcInfo/:id', async (req, res) => {
+        app.delete('/monitorInfo/:id', async (req, res) => {
             const monitorData = req.params.id;
             const query = { _id: new ObjectId(monitorData) };
             const result = await monitorDataCollection.deleteOne(query);
