@@ -27,9 +27,11 @@ async function run() {
 
         const YMAITAIDB = client.db("YMAITAIDB");
         const pcDataCollection = YMAITAIDB.collection("pcDataTable");
+        const monitorDataCollection = YMAITAIDB.collection("monitorDataTable");
 
+        /****** PC INFO BACKEND CODE START *******/
         // GET: retrieve pc data from the db
-        app.get('/pcData', async (req, res) => {
+        app.get('/pcInfo', async (req, res) => {
             const query = {};
             const cursor = pcDataCollection.find(query);
             const result = await cursor.toArray();
@@ -37,20 +39,33 @@ async function run() {
         })
 
         // POST: save pc data to the db
-        app.post('/pcData', async (req, res) => {
+        app.post('/pcInfo', async (req, res) => {
             const pcData = req.body;
             const result = await pcDataCollection.insertOne(pcData);
             res.send(result);
         })
 
         // DELETE: delete pc data from db
-        app.delete('/pcData/:id', async (req, res) => {
+        app.delete('/pcInfo/:id', async (req, res) => {
             const pcData = req.params.id;
             const query = { _id: new ObjectId(pcData) };
             const result = await pcDataCollection.deleteOne(query);
             res.send(result);
-
         })
+        /****** PC INFO BACKEND CODE END *******/
+
+        /****** MONITOR INFO BACKEND CODE START *******/
+        // GET: retrieve monitor data from the db
+        app.get('/monitorInfo', async (req, res) => {
+            const query = {};
+            const cursor = monitorDataCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+        /****** MONITOR INFO BACKEND CODE END *******/
+
+        /****** UPS INFO BACKEND CODE START *******/
+        /****** UPS INFO BACKEND CODE END *******/
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
