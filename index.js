@@ -62,6 +62,13 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         })
+
+        // POST: save monitor data to the db
+        app.post('/monitorInfo', async (req, res) => {
+            const monitorData = req.body;
+            const result = await monitorDataCollection.insertOne(monitorData);
+            res.send(result);
+        })
         /****** MONITOR INFO BACKEND CODE END *******/
 
         /****** UPS INFO BACKEND CODE START *******/
