@@ -88,6 +88,13 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         })
+
+        // POST: save monitor data to the db
+        app.post('/upsInfo', async (req, res) => {
+            const upsData = req.body;
+            const result = await upsDataCollection.insertOne(upsData);
+            res.send(result);
+        })
         /****** UPS INFO BACKEND CODE END *******/
 
         // Send a ping to confirm a successful connection
