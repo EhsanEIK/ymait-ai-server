@@ -28,6 +28,7 @@ async function run() {
         const YMAITAIDB = client.db("YMAITAIDB");
         const pcDataCollection = YMAITAIDB.collection("pcDataTable");
         const monitorDataCollection = YMAITAIDB.collection("monitorDataTable");
+        const upsDataCollection = YMAITAIDB.collection("upsDataTable");
 
         /****** PC INFO BACKEND CODE START *******/
         // GET: retrieve pc data from the db
@@ -80,6 +81,13 @@ async function run() {
         /****** MONITOR INFO BACKEND CODE END *******/
 
         /****** UPS INFO BACKEND CODE START *******/
+        // GET: retrieve ups data from the db
+        app.get('/upsInfo', async (req, res) => {
+            const query = {};
+            const cursor = upsDataCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
         /****** UPS INFO BACKEND CODE END *******/
 
         // Send a ping to confirm a successful connection
