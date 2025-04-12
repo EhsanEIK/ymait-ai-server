@@ -89,10 +89,18 @@ async function run() {
             res.send(result);
         })
 
-        // POST: save monitor data to the db
+        // POST: save ups data to the db
         app.post('/upsInfo', async (req, res) => {
             const upsData = req.body;
             const result = await upsDataCollection.insertOne(upsData);
+            res.send(result);
+        })
+
+        // DELETE: delete ups data from the db
+        app.delete('/upsInfo/:id', async (req, res) => {
+            const upsData = req.params.id;
+            const query = { _id: new ObjectId(upsData) };
+            const result = await upsDataCollection.deleteOne(query);
             res.send(result);
         })
         /****** UPS INFO BACKEND CODE END *******/
